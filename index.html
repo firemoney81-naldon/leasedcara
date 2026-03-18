@@ -1,23 +1,640 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "GV60 장기렌트 서비스",
+      "provider": {
+        "@type": "Organization",
+        "name": "GV60 장기렌트 전문 업체",
+        "url": "https://yourdomain.com",
+        "logo": "https://yourdomain.com/logo.png"
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "대한민국"
+      },
+      "description": "2026년형 제네시스 GV60 모델의 장기렌트 견적을 전문적으로 비교 분석합니다. 포괄적인 가격 정보, 유지보수, 보험, 세금 혜택을 포함한 맞춤형 컨설팅을 제공하여 고객에게 가장 합리적인 선택을 지원합니다.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "GV60 장기렌트 상품 구성",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "GV60 스탠다드 48개월 상품"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "650000",
+              "priceCurrency": "KRW",
+              "description": "GV60 스탠다드 모델 기준, 48개월 약정, 연간 주행거리 2만km, 보험 및 정비 포함 예상 월 납입금"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "GV60 퍼포먼스 36개월 상품"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "800000",
+              "priceCurrency": "KRW",
+              "description": "GV60 퍼포먼스 모델 기준, 36개월 약정, 연간 주행거리 3만km, 보험 및 정비 포함 예상 월 납입금"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "@id": "https://yourdomain.com/gv60_longterm_rental",
+              "name": "GV60 맞춤형 장기렌트"
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "0",
+              "priceCurrency": "KRW",
+              "description": "고객 맞춤형 주행거리 및 약정 기간 설정에 따른 견적 산출"
+            }
+          }
+        ]
+      },
+      "url": "https://yourdomain.com"
+    }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            background-color: #f8f9fa; /* 부드러운 배경색 */
+            color: #333;
+        }
+        header {
+            background-color: #1a237e; /* 짙은 네이비 (제네시스 브랜드 색상 연상) */
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .header-subtitle {
+            font-size: 1.2rem;
+            margin-top: 0.8rem;
+            font-weight: 300;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 1.05rem;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        section {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 3rem;
+            border-top: 5px solid #00c8f8; /* 포인트 색상 (전기차 느낌) */
+        }
+        h2 {
+            color: #1a237e;
+            font-size: 2.2rem;
+            margin-top: 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid #00c8f8;
+            display: inline-block;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        h3 {
+            color: #333;
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #00c8f8;
+            padding-left: 1rem;
+            font-weight: 600;
+        }
+        p, ul, dl {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #00c8f8;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 1.2rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+        th {
+            background-color: #1a237e;
+            color: white;
+            font-weight: 600;
+            border-bottom: 1px solid #ddd;
+        }
+        td {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+        .price-highlight {
+            font-weight: 700;
+            color: #ff5722; /* 강조 색상 */
+            font-size: 1.2rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #ff5722; /* 강조 색상 */
+            color: white;
+            font-weight: 700;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 2.5rem 0 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(255, 87, 34, 0.4);
+            font-size: 1.1rem;
+        }
+        .cta-button:hover {
+            background-color: #e64a19;
+            transform: translateY(-3px);
+        }
+        .keyword-tags {
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        .keyword-tags a {
+            background-color: #e3f2fd;
+            color: #1a237e;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        .keyword-tags a:hover {
+            background-color: #bbdefb;
+        }
+        .image-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .external-links ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .external-links li {
+            margin-bottom: 15px;
+            background-color: #f4f6f9;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .external-links a {
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .external-links a:hover {
+            text-decoration: underline;
+        }
+        dl {
+            margin-top: 1.5rem;
+        }
+        dl dt {
+            background-color: #eef1f6;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+        dl dt::after {
+            content: '+';
+            position: absolute;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.2s ease;
+        }
+        dl dt.active::after {
+            content: '-';
+            transform: translateY(-50%) rotate(180deg);
+        }
+        dl dt:hover {
+            background-color: #e0e6f1;
+        }
+        dl dd {
+            background-color: #f9fbfd;
+            padding: 1.5rem;
+            border-left: 3px solid #00c8f8;
+            border-radius: 0 0 8px 8px;
+            display: none;
+            margin-bottom: 15px;
+        }
+        dl dt.active + dd {
+            display: block;
+        }
+        .input-form {
+            background-color: #f4f6f9;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1a237e;
+        }
+        .input-group input, .input-group select, .input-group textarea {
+            width: calc(100% - 24px);
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .submit-button {
+            background-color: #00c8f8;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .submit-button:hover {
+            background-color: #00a0e0;
+        }
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            background-color: #e9ecef;
+            border-top: 1px solid #dee2e6;
+            margin-top: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.4rem; }
+            section { padding: 1.5rem; }
+            nav ul { flex-direction: column; gap: 0.5rem; }
+            nav a { padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>2026 GV60 장기렌트, 지금이 가장 저렴한 견적의 기회!</h1>
+        <p class="header-subtitle">합리적인 비용으로 제네시스 전기차를 소유하는 가장 스마트한 방법, 장기렌트 전문 비교 컨설팅.</p>
+        <nav>
+            <ul>
+                <li><a href="#intro">GV60 장기렌트란?</a></li>
+                <li><a href="#price">가격 비교</a></li>
+                <li><a href="#advantage">장단점 분석</a></li>
+                <li><a href="#faq">자주 묻는 질문</a></li>
+                <li><a href="#contact">견적 문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <section id="intro">
+            <h2>GV60 장기렌트: 전기차 시대를 여는 최적의 선택</h2>
+            <div class="image-container">
+                <img src="https://images.pexels.com/photos/10185196/pexels-photo-10185196.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="제네시스 GV60 차량 이미지" loading="lazy">
+            </div>
+            <p><strong>제네시스 GV60</strong>은 뛰어난 성능과 혁신적인 디자인으로 출시와 동시에 큰 주목을 받은 럭셔리 전기차입니다. 2026년형 모델은 한층 더 업그레이드된 배터리 효율성과 첨단 기술을 탑재하여 소비자들의 기대감을 높이고 있습니다. 이러한 프리미엄 전기차를 합리적인 비용으로 경험할 수 있는 가장 효과적인 방법이 바로 <strong>GV60 장기렌트</strong>입니다.</p>
+
+            <p>장기렌트는 단순히 차량을 빌려 타는 것을 넘어, 세금, 보험, 정비, 사고처리 등 차량 관리에 수반되는 모든 복잡한 과정을 업체에 일임하고 오직 월 렌탈료만 지불하는 신개념 차량 이용 방식입니다. 특히 사업자에게는 비용처리 혜택까지 제공되어, GV60과 같은 고가 차량의 초기 구매 비용 부담을 덜고 싶은 분들에게 최적의 솔루션으로 손꼽힙니다.</p>
+
+            <h3>2026년형 GV60, 장기렌트로 이용해야 하는 이유</h3>
+            <p>전기차 시장이 급변하는 2026년에는 장기렌트의 장점이 더욱 부각됩니다. 전기차 기술은 매년 빠르게 발전하며 신차 출시 주기가 짧아지고 있습니다. 3~4년 후에는 더 뛰어난 성능의 새로운 GV60 모델이나 경쟁 차량이 등장할 수 있습니다. <strong>GV60 장기렌트</strong>는 이러한 감가상각 위험을 고객이 아닌 렌트사가 부담하며, 약정 기간이 끝나면 최신 모델로 교체할 수 있어 언제나 최신 기술을 경험하고자 하는 합리적인 소비자에게 가장 훌륭한 선택입니다. 또한, 'GV60 장기렌트 가격'은 차량 구매 시의 각종 세금과 이자 비용을 고려하면 총 비용 측면에서 유리한 경우가 많습니다.</p>
+
+            <div class="keyword-tags" aria-label="관련 키워드 검색">
+                <a href="#price">GV60 장기렌트 비용</a>
+                <a href="#advantage">GV60 장기렌트 장점</a>
+                <a href="#price">GV60 장기렌트 가격 비교</a>
+                <a href="#faq">GV60 장기렌트 신규 가입 혜택</a>
+                <a href="#contact">GV60 장기렌트 전문 업체</a>
+                <a href="#price">GV60 장기렌트 저렴한곳</a>
+                <a href="#advantage">GV60 장기렌트 장단점</a>
+            </div>
+        </section>
+
+        <section id="price">
+            <h2>GV60 장기렌트 가격 및 비용 상세 분석</h2>
+            <p>GV60 장기렌트의 <strong>월 납입금액</strong>은 차량 모델(스탠다드/퍼포먼스), 옵션, 약정 기간(36개월/48개월/60개월), 초기 보증금 유무, 그리고 연간 주행거리(1만km/2만km/무제한)에 따라 크게 달라집니다. 'GV60 장기렌트 견적'을 받을 때 가장 중요한 것은 단순히 월 렌탈료가 '얼마'인지를 확인하는 것이 아니라, 총 비용과 포함된 서비스를 면밀히 비교하는 것입니다. <strong>저렴한곳</strong>을 찾기 위해 여러 업체를 비교하는 것은 필수입니다.</p>
+
+            <h3>1. 장기렌트 vs. 할부 구매 vs. 리스 비교표 (2026년 기준)</h3>
+            <p>다음은 GV60 스탠다드 모델을 기준으로 장기렌트, 할부 구매, 리스를 비교한 표입니다. 이 표를 통해 각 상품의 '장단점'과 '차이점'을 명확히 파악할 수 있습니다. 장기렌트의 <strong>예상 비용</strong>을 계산할 때 숨겨진 비용이 없는지 확인하세요.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>장기렌트 (보증금 0%)</th>
+                        <th>할부 구매 (선수금 30%)</th>
+                        <th>금융 리스 (보증금 30%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>초기 비용</strong></td>
+                        <td>없음 (선택 가능)</td>
+                        <td>취득세, 등록세, 선수금 (차량가 30%)</td>
+                        <td>보증금 (차량가 30%), 취득세, 등록세</td>
+                    </tr>
+                    <tr>
+                        <td><strong>차량 소유</strong></td>
+                        <td>렌트사 소유 (계약 만료 시 인수 가능)</td>
+                        <td>개인 소유</td>
+                        <td>리스사 소유 (계약 만료 시 인수 가능)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>보험 및 정비</strong></td>
+                        <td>렌트료에 포함 (정비 상품 선택)</td>
+                        <td>개인 직접 가입 (보험료 상승 가능성)</td>
+                        <td>개인 직접 가입 (보험료 상승 가능성)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>세금 혜택</strong></td>
+                        <td>전액 비용 처리 (사업자)</td>
+                        <td>차량 감가상각 비용 처리</td>
+                        <td>리스료 비용 처리 (사업자)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>번호판</strong></td>
+                        <td>'하', '허', '호' 번호판 사용</td>
+                        <td>일반 번호판 사용</td>
+                        <td>일반 번호판 사용</td>
+                    </tr>
+                    <tr>
+                        <td><strong>총 비용</strong></td>
+                        <td>유지 비용 포함 시 가장 경제적</td>
+                        <td>초기 비용 및 보험료 부담 큼</td>
+                        <td>이자율에 따라 총 비용이 달라짐</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>장기렌트는 초기 비용이 없고 보험료가 할증되지 않아 사회 초년생이나 운전 경력이 짧은 분들에게 특히 유리합니다. 특히 <strong>GV60 장기렌트</strong>는 신차 구매 시의 '평균' 초기 비용을 획기적으로 낮춰주는 효과가 있습니다.</p>
+
+            <h3>2. 2026 GV60 모델별 예상 월 렌탈료 (견적 시뮬레이션)</h3>
+            <p>2026년형 GV60 모델을 기준으로 <strong>GV60 장기렌트</strong> 월 렌탈료를 대략적으로 산정해 보았습니다. 이는 참고용 <strong>예상 금액</strong>이며, 실제 <strong>견적</strong>은 업체별 프로모션, 금리, 조건에 따라 달라집니다. '내돈내산' 후기를 살펴보면 업체별로 <strong>가격</strong> 편차가 크다는 것을 알 수 있습니다.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>모델</th>
+                        <th>약정 기간</th>
+                        <th>연간 주행거리</th>
+                        <th>월 예상 비용 (보증금 0%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GV60 스탠다드 2WD</td>
+                        <td>48개월</td>
+                        <td>2만 km</td>
+                        <td><span class="price-highlight">60만원대 ~ 70만원대</span></td>
+                    </tr>
+                    <tr>
+                        <td>GV60 스탠다드 AWD</td>
+                        <td>48개월</td>
+                        <td>2만 km</td>
+                        <td><span class="price-highlight">60만원대 후반 ~ 70만원대 후반</span></td>
+                    </tr>
+                    <tr>
+                        <td>GV60 퍼포먼스</td>
+                        <td>36개월</td>
+                        <td>3만 km</td>
+                        <td><span class="price-highlight">70만원대 후반 ~ 80만원대 후반</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>위 표는 <strong>GV60 장기렌트</strong>의 대략적인 '평균' <strong>가격</strong>을 나타냅니다. <strong>저렴한곳</strong>을 찾으려면 보증금 납부 여부, 정비 상품 포함 여부, 그리고 <strong>할인</strong> 프로모션을 꼼꼼히 확인해야 합니다. 렌탈 <strong>업체</strong>마다 금리 조건과 매입 단가가 다르기 때문에 <strong>비교</strong> 견적을 받는 것이 중요합니다.</p>
+        </section>
+
+        <section id="advantage">
+            <h2>GV60 장기렌트의 장점과 단점 심층 분석</h2>
+            <p>어떤 상품이든 완벽할 수는 없습니다. <strong>GV60 장기렌트</strong> 역시 명확한 <strong>장점</strong>과 고려해야 할 <strong>단점</strong>이 존재합니다. 합리적인 결정을 위해 '장단점'을 종합적으로 분석해 보겠습니다.</p>
+
+            <h3>GV60 장기렌트의 주요 장점 (Pros)</h3>
+            <ul class="check-list">
+                <li><strong>초기 비용 부담 제로:</strong> 차량 구매 시 필요한 취득세, 등록세, 자동차 보험료 등을 한 번에 납부할 필요가 없습니다. 초기 보증금 없이도 <strong>신규 가입</strong>이 가능하여 경제적 부담을 획기적으로 줄여줍니다.</li>
+                <li><strong>세금 절약 효과 (사업자):</strong> 사업자의 경우 월 렌탈료 전액을 손비 처리할 수 있어 법인세 또는 소득세 절감 효과가 매우 큽니다. <strong>GV60 장기렌트</strong>는 고가 전기차일수록 세금 혜택의 폭이 넓어집니다.</li>
+                <li><strong>보험료 할증 걱정 없음:</strong> 차량 명의가 렌트사로 되어 있어 개인의 보험 경력이 단절되지 않습니다. 사고가 발생해도 보험료가 할증되지 않아, 특히 운전 경력이 짧거나 사고 이력이 있는 분들에게 큰 <strong>장점</strong>입니다.</li>
+                <li><strong>편리한 차량 관리:</strong> 정비 포함 상품을 선택하면 엔진 오일, 타이어 교체, 배터리 관리 등 모든 소모품 교체 및 정비 서비스를 렌트사에서 제공합니다. GV60과 같은 전기차의 특성상 배터리 관리의 중요성이 높으므로 이 <strong>장점</strong>은 더욱 부각됩니다.</li>
+                <li><strong>감가상각 위험 회피:</strong> 전기차 시장의 변화 속도는 매우 빠릅니다. 3~4년 후 GV60의 중고차 <strong>가격</strong>이 하락해도 그 위험을 고객이 아닌 렌트사가 부담합니다. 계약 만료 시 최신 모델로 교체할 수 있어 만족도가 높습니다.</li>
+            </ul>
+
+            <h3>GV60 장기렌트의 주요 단점 (Cons)</h3>
+            <ul class="check-list">
+                <li><strong>번호판 제한:</strong> 렌트 차량 고유의 '하, 허, 호' 번호판을 사용해야 합니다. <strong>GV60</strong>과 같은 프리미엄 차량에 일반 번호판을 선호하는 고객에게는 <strong>단점</strong>으로 작용할 수 있습니다.</li>
+                <li><strong>계약 해지 위약금:</strong> 약정 기간 내에 계약을 해지하면 높은 위약금이 발생합니다. 계약 기간은 <strong>GV60 장기렌트</strong>의 '가격'을 결정하는 중요한 요소이므로 신중하게 선택해야 합니다.</li>
+                <li><strong>주행거리 제한:</strong> 연간 주행거리를 초과하면 추가 비용을 지불해야 합니다. '평균' 주행거리를 정확히 파악하여 계약 시 주행거리를 설정하는 것이 중요합니다. 무제한 주행거리 옵션을 선택하면 <strong>비용</strong>이 상승할 수 있습니다.</li>
+            </ul>
+        </section>
+
+        <section id="faq">
+            <h2>GV60 장기렌트 자주 묻는 질문 (FAQ)</h2>
+            <p><strong>네이버 지식iN</strong>과 <strong>구글</strong>에서 'GV60 장기렌트' 키워드로 검색되는 대표적인 질문들을 모았습니다. <strong>GV60 장기렌트</strong>를 고민하는 분들이 가장 궁금해하는 '차이점', '혜택', '가입' 관련 정보를 확인해 보세요.</p>
+            <dl>
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">1. GV60 장기렌트 가입 시 '현금지원'이나 '사은품'을 받을 수 있나요?</dt>
+                <dd>네, 렌터카 업체에서는 <strong>신규 가입</strong> 고객 유치를 위해 다양한 프로모션을 진행합니다. '현금지원', 고급 사은품(블랙박스, 틴팅 시공 등), 또는 추가 <strong>할인</strong> 혜택을 제공하는 경우가 많습니다. 'GV60 장기렌트 전문 업체'를 <strong>비교</strong>하고 문의하시면 더 많은 혜택을 받을 수 있습니다. 저희 <strong>전문 업체</strong>에서는 고객 만족을 위한 특별 <strong>지원금</strong>을 제공하고 있습니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">2. GV60 장기렌트카 보험 가입 시 자차 보험도 포함되나요?</dt>
+                <dd>네, <strong>GV60 장기렌트</strong> 월 렌탈료에는 차량 보험이 기본으로 포함되어 있습니다. 대부분의 렌트사는 종합보험(대인, 대물, 자손)과 자차 보험을 포함합니다. 다만, 사고 시 발생하는 면책금(자차 부담금)은 고객이 부담하며, 면책금 금액은 업체별로 <strong>차이점</strong>이 있습니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">3. 계약 만료 시 GV60을 인수하는 것이 유리할까요?</dt>
+                <dd><strong>GV60 장기렌트</strong> 계약 만료 시 차량 인수를 할지, 반납 후 <strong>신규</strong> 계약을 할지 고민하는 분들이 많습니다. 인수 시점의 <strong>GV60</strong> 잔존가치와 중고차 시세를 <strong>비교</strong>하여 결정해야 합니다. 일반적으로 잔존가치가 높을수록 인수 시 이득이며, 시장 <strong>가격</strong>이 급격히 하락한 경우에는 반납하고 새로운 모델로 교체하는 것이 유리합니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">4. 여러 렌트 업체의 '견적'을 '비교'할 때 주의할 점은 무엇인가요?</dt>
+                <dd>단순히 월 렌탈료가 '저렴한곳'을 찾는 것보다는 '총 비용'을 꼼꼼히 <strong>비교</strong>해야 합니다. 예를 들어, 렌탈 <strong>업체</strong>마다 정비 서비스, 보험 보장 범위, 약정 주행거리 초과 시 패널티 <strong>비용</strong> 등에 '차이점'이 있습니다. 또한, GV60과 같은 전기차의 경우 충전 카드를 비롯한 추가 <strong>혜택</strong>을 확인하는 것도 중요합니다. 네이버, 구글 검색을 통해 얻은 <strong>후기</strong>들을 참고하여 <strong>순위</strong>가 높은 믿을 수 있는 업체를 선택하는 것이 좋습니다.</dd>
+            </dl>
+        </section>
+
+        <section class="external-links">
+            <h2>GV60 장기렌트 관련 유용한 외부 정보</h2>
+            <p><strong>GV60 장기렌트</strong>를 결정하기 전에 신뢰할 수 있는 외부 자료를 통해 더 많은 정보를 얻어보세요. <strong>구글</strong>과 <strong>네이버</strong> 검색 시 참고할 만한 공신력 있는 자료들을 제공합니다.</p>
+            <ul>
+                <li><a href="https://www.carisyou.com/" target="_blank">국내 자동차 산업 동향 및 GV60 리뷰 (카이즈유 데이터 연구소)</a></li>
+                <li><a href="https://www.molit.go.kr/USR/policyData/m_1/dtl.jsp?id=3819" target="_blank">전기차 보조금 정책 및 관련 법규 정보 (국토교통부)</a></li>
+                <li><a href="https://namu.wiki/w/%EC%9E%A5%EA%B8%B0%EB%A0%8C%ED%8A%B8" target="_blank">장기렌트 개념 및 장단점 분석 (나무위키)</a></li>
+                <li><a href="https://www.tax.go.kr/" target="_blank">사업자 세금 혜택 관련 정보 (국세청)</a></li>
+                <li><a href="https://www.korea.kr/policy/pressReleaseView.do?newsId=156477172" target="_blank">정부의 친환경차 정책 및 보급 현황 (대한민국 정책브리핑)</a></li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>GV60 장기렌트 견적 상담 및 신청 (AI 챗봇/실시간 견적)</h2>
+            <p><strong>GV60 장기렌트</strong> 견적은 짐의 양, 작업 환경에 따라 비용이 천차만별입니다. 전화나 온라인으로 문의하시면 정확한 견적을 무료로 상담해 드립니다. <strong>저렴한곳</strong>을 찾기 위해 수십 군데 <strong>업체</strong>를 일일이 비교하는 수고를 덜어드립니다. 저희는 <strong>GV60 장기렌트</strong> 전문 <strong>업체</strong>로서 고객님의 조건에 맞는 최적의 <strong>가격</strong>을 제시해 드립니다.</p>
+
+            <div class="input-form">
+                <p><strong>실시간 견적 문의하기</strong></p>
+                <form action="/submit_quotation" method="post">
+                    <div class="input-group">
+                        <label for="carModel">GV60 모델 선택</label>
+                        <select id="carModel" name="carModel">
+                            <option value="standard">GV60 스탠다드</option>
+                            <option value="performance">GV60 퍼포먼스</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="rentalPeriod">희망 계약 기간 (개월)</label>
+                        <select id="rentalPeriod" name="rentalPeriod">
+                            <option value="36">36개월</option>
+                            <option value="48">48개월</option>
+                            <option value="60">60개월</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="mileage">연간 주행거리 (km)</label>
+                        <select id="mileage" name="mileage">
+                            <option value="10000">1만 km</option>
+                            <option value="20000">2만 km</option>
+                            <option value="30000">3만 km</option>
+                            <option value="unlimited">무제한</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="name">성함</label>
+                        <input type="text" id="name" name="name" placeholder="이름을 입력해주세요" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">연락처</label>
+                        <input type="tel" id="phone" name="phone" placeholder="휴대폰 번호 (하이픈 제외)" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="memo">문의 내용</label>
+                        <textarea id="memo" name="memo" rows="3" placeholder="추가 문의사항을 입력해주세요. (예: 보증금 여부, 신용 등급 등)"></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">견적 문의 신청하기</button>
+                </form>
+            </div>
+
+            <p class="mt-4">
+                <strong>전화 상담:</strong> <a href="tel:01012345678" class="price-highlight" style="font-size: 1.5rem;">010-1234-5678</a><br>
+                <strong>카카오톡 상담:</strong> <a href="https://yourdomain.com/kakao" target="_blank">카카오톡 채널 추가하기</a>
+            </p>
+            <a href="tel:01012345678" class="cta-button" aria-label="전화로 견적 상담받기">전화로 바로 상담받기 📞</a>
+        </section>
     </main>
-  </body>
-</html>
+
+    <script>
+        // FAQ 아코디언 기능 (접기/펼치기)
+        document.querySelectorAll('dl dt').forEach((dt) => {
+            dt.addEventListener('click', () => {
+                const isActive = dt.classList.contains('active');
+                document.querySelectorAll('dl dt').forEach(item => {
+                    item.classList.remove('active');
+                    item.setAttribute('aria-expanded', 'false');
+                    item.nextElementSibling.style.display = 'none';
+                });
+                if (!isActive) {
+                    dt.classList.add('active');
+                    dt.setAttribute('aria-expanded', 'true');
+                    dt.nextElementSibling.style.display = 'block';
+                }
+            });
+            dt.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    dt.click();
+                }
+            });
+        });
+    </script>
+  
